@@ -1,21 +1,21 @@
 import Toolbar from '../toolbar'
 
-const H1Block = ({ controller, i, data }) => {
+const PBlock = ({ controller, i, data }) => {
   const item = data[i]
   if (controller.focusing !== i) {
-    return (<h1>{item.data || '(Empty)'}</h1>)
+    return (<p>{item.data || '(Empty)'}</p>)
   }
   return (
     <div>
-      <input value={item.data || ''}/>
+      <textarea value={item.data || ''}/>
       <Toolbar controller={controller} i={i} data={data}/>
     </div>
   )
 }
 
 export default {
-  type: 'h1',
-  component: H1Block,
+  type: 'p',
+  component: PBlock,
   exchange: data => {
     if (typeof data !== 'string') {
       if (Array.isArray(data)) {

@@ -1,9 +1,9 @@
 import Toolbar from '../toolbar'
 
-const H1Block = ({ controller, i, data }) => {
+const H2Block = ({ controller, i, data }) => {
   const item = data[i]
   if (controller.focusing !== i) {
-    return (<h1>{item.data || '(Empty)'}</h1>)
+    return (<h2>{item.data || '(Empty)'}</h2>)
   }
   return (
     <div>
@@ -14,8 +14,8 @@ const H1Block = ({ controller, i, data }) => {
 }
 
 export default {
-  type: 'h1',
-  component: H1Block,
+  type: 'h2',
+  component: H2Block,
   exchange: data => {
     if (typeof data !== 'string') {
       if (Array.isArray(data)) {

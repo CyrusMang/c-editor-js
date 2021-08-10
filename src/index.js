@@ -1,22 +1,22 @@
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
-import { h1, h2, p, img, list, table } from './blocks'
-import styles from './Editor.module.css'
+import { h1, h2, p } from './blocks'
+
+import './styles/ceditor.css'
 
 const initConfigs = {
-  blocks: [ h1, h2, p, img, list, table ]
+  blocks: [ h1, h2, p ]
 }
 
 const ceditor = (configs=initConfigs) => {
-  return ({ value, setValue }) => {
+  return ({ data, setData }) => {
     const [focusing, setFocus] = useState(0)
     
     const select = useCallback(e => {
       setFocus(parseInt(e.target.getAttribute('data-index')))
     }, [])
     
-    const exchange = useCallback((index, type) => {
-      const data = value.find((v, i) => index === i)
-      const action = configs.blocks.find(b => b.type === type).active(data)
+    const exchange = useCallback((index, type, item) => {
+      const action = configs.blocks.find(b => b.type === type).exchange(item.data)
       switch (action.type) {
         case 'INSERT': {
           insert(index, { type, data: action.data })
@@ -27,57 +27,46 @@ const ceditor = (configs=initConfigs) => {
           return
         }
       }
-    }, [value])
+    }, [])
     
-    const change = useCallback((index, block) => {
-      setValue(value.map((v, i) => index === i ? block : v))
-    }, [value])
+    const change = useCallback((index, item) => {
+      setData(data => data.map((v, i) => index === i ? item : v))
+    }, [])
     
-    const insert = useCallback((index, block) => {
-      setValue(value.reduce((data, v, i) => {
-        data.push(v)
+    const insert = useCallback((index, item) => {
+      setData(data => data.reduce((n, v, i) => {
+        n.push(v)
         if (index === i) {
-          data.push(block)
+          n.push(item)
           setFocus(i + 1)
         }
-        return data
+        return n
       }, []))
-    }, [value])
+    }, [])
     
-    const remove = useCallback(index => {
-      setValue(value.reduce((data, v, i) => {
+    const remove = useCallback((index) => {
+      setData(data => data.reduce((n, v, i) => {
         if (index === i) {
           setFocus(i - 1)
         } else {
-          data.push(v)
+          n.push(v)
         }
-        return data
+        return n
       }, []))
-    }, [value])
+    }, [])
     
-    const controller = {focusing, setFocus, exchange, change, insert, remove}
+    const controller = useMemo(() => ({configs, focusing, setFocus, exchange, change, insert, remove}), [])
 
     return (
-      <div className={styles.editor}>
+      <div className='ceditor'>
         {value.map((row, i) => {
           const block = configs.blocks.find(b => b.type === type)
-          if (focusing === i) {
-            const View = block.view 
-            return (
-              <div onClick={select} data-index={i} key={`block-${i}`}>
-                <View i={i} value={value}/>
-              </div>
-            )
-          } else {
-            const Edit = block.edit
-            const Toolbar = block.toolbar || ToolbarDefault
-            return (
-              <div key={`block-${i}`}>
-                <Edit controller={controller} i={i} value={value}/>
-                <Toolbar controller={controller} i={i} value={value}/>
-              </div>
-            )
-          }
+          const Component = block.component
+          return (
+            <div onClick={focusing === i ? null : select} data-index={i} key={`block-${i}`}>
+              <Component controller={controller} i={i} data={data}/>
+            </div>
+          )
         })}
       </div>
     )
