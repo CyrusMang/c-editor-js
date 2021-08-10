@@ -1,23 +1,10 @@
-import Toolbar from '../toolbar'
-
-const H1Block = ({ controller, i, data }) => {
-  const item = data[i]
-  if (controller.focusing !== i) {
-    return (<h1>{item.data || '(Empty)'}</h1>)
-  }
-  return (
-    <div>
-      <input value={item.data || ''}/>
-      <Toolbar controller={controller} i={i} data={data}/>
-    </div>
-  )
-}
+import TextBlock from './text'
 
 export default {
   type: 'h1',
-  component: H1Block,
+  component: TextBlock,
   exchange: data => {
-    if (typeof data !== 'string') {
+    if (data && typeof data !== 'string') {
       if (Array.isArray(data)) {
         data = data.join(',')
       } else {

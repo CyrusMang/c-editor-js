@@ -12,29 +12,30 @@ const ceditor = (configs=initConfigs) => {
     const [focusing, setFocus] = useState(0)
     
     const select = useCallback(e => {
-      setFocus(parseInt(e.target.getAttribute('data-index')))
+      setFocus(parseInt(e.currentTarget.getAttribute('data-index')))
     }, [])
     
-    const exchange = useCallback((index, type, item) => {
+    const exchange = useCallback((data, index, type) => {
+      const item = data[index]
       const action = configs.blocks.find(b => b.type === type).exchange(item.data)
       switch (action.type) {
         case 'INSERT': {
-          insert(index, { type, data: action.data })
+          insert(data, index, { type, data: action.data })
           return
         }
         case 'EDIT': {
-          change(index, { type, data: action.data })
+          change(data, index, { type, data: action.data })
           return
         }
       }
     }, [])
     
-    const change = useCallback((index, item) => {
-      setData(data => data.map((v, i) => index === i ? item : v))
+    const change = useCallback((data, index, item) => {
+      setData(data.map((v, i) => index === i ? item : v))
     }, [])
     
-    const insert = useCallback((index, item) => {
-      setData(data => data.reduce((n, v, i) => {
+    const insert = useCallback((data, index, item) => {
+      setData(data.reduce((n, v, i) => {
         n.push(v)
         if (index === i) {
           n.push(item)
@@ -44,8 +45,8 @@ const ceditor = (configs=initConfigs) => {
       }, []))
     }, [])
     
-    const remove = useCallback((index) => {
-      setData(data => data.reduce((n, v, i) => {
+    const remove = useCallback((data, index) => {
+      setData(data.reduce((n, v, i) => {
         if (index === i) {
           setFocus(i - 1)
         } else {
@@ -55,16 +56,16 @@ const ceditor = (configs=initConfigs) => {
       }, []))
     }, [])
     
-    const controller = useMemo(() => ({configs, focusing, setFocus, exchange, change, insert, remove}), [])
-
+    const controller = useMemo(() => ({configs, setFocus, exchange, change, insert, remove}), [])
+    
     return (
       <div className='ceditor'>
-        {value.map((row, i) => {
-          const block = configs.blocks.find(b => b.type === type)
+        {data.map((item, i) => {
+          const block = configs.blocks.find(b => b.type === item.type)
           const Component = block.component
           return (
-            <div onClick={focusing === i ? null : select} data-index={i} key={`block-${i}`}>
-              <Component controller={controller} i={i} data={data}/>
+            <div className={item.type} onClick={focusing === i ? null : select} data-index={i} key={`block-${i}`}>
+              <Component controller={controller} focusing={focusing} i={i} data={data}/>
             </div>
           )
         })}

@@ -1,31 +1,32 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 
-export const ToolBarContainer = ({ controller, i, children }) => {
-  const insert = useCallback(() => controller.insert(i, { type: 'p' }), [])
-  const remove = useCallback(() => controller.remove(i), [])
+export const ToolBarContainer = ({ controller, i, data, children }) => {
+  const insert = useCallback(() => controller.insert(data, i, { type: 'p' }), [data])
+  const remove = useCallback(() => controller.remove(data, i), [data])
   
   return (
-    <div>
+    <div className='toolbar'>
       <a href='#' onClick={insert}><span className="icon-plus icon"></span></a>
       {children}
-      <a href='#' onClick={remove}><span className="icon-cross icon"></span></a>
+      <a href='#' className='remove' onClick={remove}><span className="icon-cross icon"></span></a>
     </div>
   )
 }
 
 const ToolBar = ({ controller, i, data }) => {
-  const currentItem = data[i]
   const exchange = useCallback(e => {
-    controller.exchange(i, e.currentTarget.getAttribute('data-tab'), currentItem)
-  }, [])
+    controller.exchange(data, i, e.currentTarget.getAttribute('data-tab'))
+  }, [data])
   return (
-    <ToolBarContainer controller={controller} i={i}>
+    <ToolBarContainer controller={controller} i={i} data={data}>
       <div>
         <ul>
-          {controller.block.map(b => {
+          {controller.configs.blocks.map(b => {
             return (
-              <li data-tab={b.type} className={b.type === currentItem.type ? styles.on : ''} onClick={exchange}>
-                {b.icon || (<span>{b.type.toUpperCase()}</span>)}
+              <li className={b.type === data[i].type ? 'on' : ''} key={`toolbar-${i}-${b.type}`}>
+                <a href='#' data-tab={b.type} onClick={exchange}>
+                  {b.icon || (<span>{b.type.toUpperCase()}</span>)}
+                </a>
               </li>
             )
           })}

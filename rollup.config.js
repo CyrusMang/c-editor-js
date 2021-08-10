@@ -29,7 +29,7 @@ const config = MODE.map(m => {
       exports: "auto",
       globals: {
         "react": "React",
-        "@babel/runtime/helpers/slicedToArray": "slicedToArray"
+        "@babel/runtime/helpers/slicedToArray": "_slicedToArray"
       }
     },
     // this externelizes react to prevent rollup from compiling it
