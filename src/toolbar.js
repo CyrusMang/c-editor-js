@@ -1,4 +1,4 @@
-import { useMeme, useCallback } from 'react'
+import { useCallback } from 'react'
 
 export const ToolBarContainer = ({ controller, i, children }) => {
   const insert = useCallback(() => controller.insert(i, { type: 'p' }), [])
@@ -19,7 +19,7 @@ const ToolBar = ({ controller, i, data }) => {
     controller.exchange(i, e.currentTarget.getAttribute('data-tab'), currentItem)
   }, [])
   return (
-    <ToolBarContainer controller={controller} i={i}/>
+    <ToolBarContainer controller={controller} i={i}>
       <div>
         <ul>
           {controller.block.map(b => {

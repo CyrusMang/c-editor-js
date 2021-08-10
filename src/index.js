@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
-import { h1, h2, p } from './blocks'
+import React, { useState, useCallback, useMemo } from 'react'
+import { h1, h2, p } from './blocks/index'
 
 import './styles/ceditor.css'
 
