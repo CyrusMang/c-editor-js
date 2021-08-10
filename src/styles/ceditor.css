@@ -79,7 +79,7 @@
 }
 .ceditor .toolbar {
   background: #bbb;
-  margin: 5px 10px 10px 10px;
+  margin: 0 10px 10px 10px;
 }
 .ceditor .toolbar a {
   text-decoration: bold;
@@ -112,10 +112,6 @@
   background: #999;
 }
 
-.ceditor .h1 .view, .ceditor .h2 .view, .ceditor .p .view {
-  whiteSpace: 'pre-wrap';
-  margin: 10px;
-}
 .ceditor .h1 .view, .ceditor .h1 textarea {
   font-size: 20px;
 }
@@ -124,4 +120,12 @@
 }
 .ceditor .p .view, .ceditor .p textarea {
   font-size: 12px;
+}
+.ceditor .view {
+  padding: 6px 16px;
+}
+.ceditor textarea {
+  margin: 0 10px;
+  padding: 5px;
+  width: calc(100% - 32px);
 }

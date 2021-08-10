@@ -24,7 +24,7 @@ const TextBlock = ({ controller, focusing, i, data }) => {
     if (!textareaRef.current) return
     textareaRef.current.style.height = 'inherit'
     textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
-  }, [data[i]])
+  }, [data[i], textareaRef.current])
   
   if (focusing !== i) {
     return (<div className='view'>{data[i].data || '(Empty)'}</div>)
