@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import Toolbar from '../toolbar'
 
 const TextBlock = ({ controller, focusing, i, data }) => {
+  const onFocus = focusing === i
+  
   const textareaRef = useRef(null)
   
   const change = useCallback(e => {
@@ -21,12 +23,15 @@ const TextBlock = ({ controller, focusing, i, data }) => {
   }, [data])
   
   useEffect(() => {
-    if (!textareaRef.current) return
+    if (!onFocus || !textareaRef.current) return
     textareaRef.current.style.height = 'inherit'
     textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
-  }, [data[i], textareaRef.current])
+    textareaRef.current.focus()
+    const len = textareaRef.current.val().length
+    textareaRef.current.setSelectionRange(len, len)
+  }, [onFocus, data[i], textareaRef.current])
   
-  if (focusing !== i) {
+  if (!onFocus) {
     return (<div className='view'>{data[i].data || '(Empty)'}</div>)
   }
   return (
