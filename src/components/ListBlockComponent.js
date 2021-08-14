@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Toolbar from './Toolbar'
 
 const ListBlockComponent = ({ controller, focusing, i, data }) => {
@@ -37,7 +37,7 @@ const ListBlockComponent = ({ controller, focusing, i, data }) => {
   const remove = useCallback(e => {
     const index = parseInt(e.target.parent.getAttribute('data-index'))
     controller.change(i, {
-      type: data[i].type
+      type: data[i].type,
       data: data[i].data.filter((_, _i) => _i !== index),
     })
     setPointFocus(pointFocusing - 1)

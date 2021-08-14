@@ -21,9 +21,9 @@ const ToolBar = ({ controller, i, data }) => {
     <ToolBarContainer controller={controller} i={i} data={data}>
       <div>
         <ul>
-          {controller.configs.blocks.map(b => {
+          {controller.configs.blocks.map((b, _i) => {
             return (
-              <li className={b.type === data[i].type ? 'on' : ''} key={`toolbar-${i}-${b.type}`}>
+              <li className={b.type === data[i].type ? 'on' : ''} key={`toolbar-${i}-${_i}`}>
                 <a href='#' data-tab={b.type} onClick={exchange}>
                   {b.icon || (<span>{b.type.toUpperCase()}</span>)}
                 </a>

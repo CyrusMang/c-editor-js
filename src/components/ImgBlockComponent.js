@@ -37,7 +37,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
       {uploader.errors.map(e => (<p key={e}>{e}</p>))}
       <div>
         {uploader.status === 'pending' ? (<div>{'File uploading ...'}</div>) : ''}
-        <img src={uploader.preview || preview}>
+        <img src={uploader.preview || preview}/>
       </div>
       <input type='file' ref={input} onChange={changeFile} style={{display: 'none'}}/>
       <ToolBarContainer controller={controller} i={i} data={data}>

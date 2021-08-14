@@ -2,7 +2,7 @@ import React from 'react'
 import ListBlockComponent from '../components/ListBlockComponent'
 
 export default {
-  type: 'p',
+  type: 'list',
   component: ListBlockComponent,
   exchange: data => {
     if (data && !Array.isArray(data)) {

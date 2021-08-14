@@ -26,7 +26,7 @@ const useUploader = upload => {
         setState(state => ({...state, status: 'completed', result }))
       } catch (e) {
         console.error(e)
-        setState(state => ({...state, status: 'error', ['unknow error, please try again'] }))
+        setState(state => ({...state, status: 'error', errors: ['unknow error, please try again'] }))
       }
     })()
   }, [])
