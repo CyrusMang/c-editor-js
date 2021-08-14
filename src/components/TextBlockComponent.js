@@ -13,7 +13,7 @@ const TextBlockComponent = ({ controller, focusing, i, data }) => {
     })
   }, [data])
   
-  const keypress = useCallback(e => {
+  const keydown = useCallback(e => {
     if (e.key === 'Enter'){
       e.preventDefault()
       if (data[i].data) {
@@ -36,7 +36,7 @@ const TextBlockComponent = ({ controller, focusing, i, data }) => {
   }
   return (
     <div>
-      <textarea ref={textareaRef} autoFocus value={data[i].data || ''} onChange={change} onKeyPress={keypress} rows={1}/>
+      <textarea ref={textareaRef} autoFocus value={data[i].data || ''} onChange={change} onKeyDown={keydown} rows={1}/>
       <Toolbar controller={controller} focusing={focusing} i={i} data={data}/>
     </div>
   )

@@ -118,8 +118,20 @@
 .ceditor .h2 .view, .ceditor .h2 textarea {
   font-size: 16px;
 }
-.ceditor .p .view, .ceditor .p textarea {
+.ceditor .p .view {
   font-size: 12px;
+}
+.ceditor .list .container {
+  padding: 0 10px 0 35px;
+}
+.ceditor .list p {
+  padding: 5px 0;
+  margin: 0;
+}
+.ceditor .list .container textarea {
+  vertical-align: text-top;
+  margin-left: -5px;
+  width: calc(100% - 8px);
 }
 .ceditor .view {
   padding: 6px 16px;
@@ -128,4 +140,5 @@
   margin: 0 10px;
   padding: 5px;
   width: calc(100% - 32px);
+  font-size: 12px;
 }

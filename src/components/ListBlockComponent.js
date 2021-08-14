@@ -1,11 +1,15 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import Toolbar from './Toolbar'
 
 const ListBlockComponent = ({ controller, focusing, i, data }) => {
+  const onFocus = focusing === i
+  
+  const textareaRef = useRef(null)
+  
   const [pointFocusing, setPointFocus] = useState(0)
   
   const select = useCallback(e => {
-    setPointFocus(e.currentTarget.getAttribute('data-index'))
+    setPointFocus(parseInt(e.currentTarget.getAttribute('data-index')))
   }, [])
   
   const change = useCallback(e => {
@@ -20,56 +24,60 @@ const ListBlockComponent = ({ controller, focusing, i, data }) => {
     })
   }, [data, pointFocusing])
   
-  const newline = useCallback(e => {
-    controller.change(data, i, {
-      type: data[i].type,
-      data: (data[i].data || ['']).reduce((n, item, _i) => {
-        n.push(item)
-        if (_i === pointFocusing) {
-          n.push('')
-          setPointFocus(_i + 1)
-        }
-        return n
-      }, []),
-    })
-  }, [data, pointFocusing])
-  
-  const remove = useCallback(e => {
-    const index = parseInt(e.target.parent.getAttribute('data-index'))
-    controller.change(i, {
-      type: data[i].type,
-      data: data[i].data.filter((_, _i) => _i !== index),
-    })
-    setPointFocus(pointFocusing - 1)
-  }, [data, pointFocusing])
-  
-  const keypress = useCallback(e => {
+  const keydown = useCallback(e => {
     if (e.key === 'Enter'){
       e.preventDefault()
-      newline()
+      controller.change(data, i, {
+        type: data[i].type,
+        data: (data[i].data || ['']).reduce((n, item, _i) => {
+          n.push(item)
+          if (_i === pointFocusing) {
+            n.push('')
+          }
+          return n
+        }, []),
+      })
+      setPointFocus(pointFocusing + 1)
+    } else if (e.key === 'Backspace' || e.key === 'Delete') {
+      if (pointFocusing > 0 && !data[i].data[pointFocusing]) {
+        e.preventDefault()
+        controller.change(data, i, {
+          type: data[i].type,
+          data: data[i].data.filter((_, _i) => _i !== pointFocusing),
+        })
+        setPointFocus(pointFocusing - 1)
+      }
     }
-  }, [newline])
+  }, [data, pointFocusing])
   
-  if (focusing !== i) {
+  useEffect(() => {
+    if (!onFocus || !textareaRef.current) return
+    textareaRef.current.style.height = 'inherit'
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+    textareaRef.current.focus()
+    const len = textareaRef.current.value.length
+    textareaRef.current.setSelectionRange(len, len)
+  }, [onFocus, pointFocusing, data[i], textareaRef.current])
+  
+  if (!onFocus) {
     return (
-      <ul>
+      <ul className='view container'>
         {(data[i].data || []).map((line, _i) => (
-          <li key={`list-${i}-${_i}`}>{line}</li>
+          <li key={`list-${i}-${_i}`}><p>{line}</p></li>
         ))}
       </ul>
     )
   }
   return (
     <div>
-      <ul>
+      <ul className='container'>
         {(data[i].data || ['']).map((line, _i) => (
-          <li key={`list-${i}-${_i}`} data-index={_i}>
-            {focusing === _i ? (
-              <input value={line} onChange={change} onKeyPress={keypress}/>
+          <li key={`list-${i}-${_i}`}>
+            {pointFocusing === _i ? (
+              <textarea ref={textareaRef} autoFocus value={line} onChange={change} onKeyDown={keydown} rows={1}/>
             ) : (
-              <p onClick={select}>{line}</p>
+              <p data-index={_i} onClick={select}>{line}</p>
             )}
-            <a href='#' onClick={remove}><span className="icon-cross icon"></span></a>
           </li>
         ))}
       </ul>
