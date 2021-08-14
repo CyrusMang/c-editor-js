@@ -1,8 +1,8 @@
-import TextBlock from './text'
+import TextBlockComponent from '../components/TextBlockComponent'
 
 export default {
   type: 'h1',
-  component: TextBlock,
+  component: TextBlockComponent,
   exchange: data => {
     if (data && typeof data !== 'string') {
       if (Array.isArray(data)) {

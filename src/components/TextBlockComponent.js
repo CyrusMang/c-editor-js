@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import Toolbar from '../toolbar'
+import Toolbar from './Toolbar'
 
-const TextBlock = ({ controller, focusing, i, data }) => {
+const TextBlockComponent = ({ controller, focusing, i, data }) => {
   const onFocus = focusing === i
   
   const textareaRef = useRef(null)
@@ -42,4 +42,4 @@ const TextBlock = ({ controller, focusing, i, data }) => {
   )
 }
 
-export default TextBlock
+export default TextBlockComponent
