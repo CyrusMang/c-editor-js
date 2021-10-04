@@ -58,6 +58,7 @@ const ceditor = (configs=initConfigs) => {
     
     const controller = useMemo(() => ({configs, setFocus, exchange, change, insert, remove}), [])
     
+    data = data || [{ type: configs.blocks[0].type }]
     return (
       <div className='ceditor'>
         {data.map((item, i) => {
