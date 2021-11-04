@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import Toolbar from './Toolbar'
+import { ToolBarContainer } from './Toolbar'
 
 const Cell = ({ x, y, selected, hightlight, change, data }) => {
   return (
@@ -14,7 +14,16 @@ const TableEdit = ({ controller, i, data }) => {
   const change = (x, y, c) => {
     controller.change(data, i, {
       type: data[i].type,
-      data: [],
+      data: data[i].data.map(
+        (row, _x) => {
+          return row.map((cell, _y) => {
+            if (x === _x && y === _y) {
+              return c
+            }
+            return cell
+          }
+        }
+      )
     })
   }
   
@@ -43,8 +52,9 @@ const TableEdit = ({ controller, i, data }) => {
                 {row.map((cell, y) => {
                   const selected = x === selectedCell.x && y === selectedCell.y
                   const properties = {
-                    x, y, selected, 
+                    x, y, selected, change
                     hightlight: x === selectedBulk.x || y === selectedBulk.y, 
+                    data: cell,
                   }
                   return (
                     <div key={`table-${i}-cell-${x}-${y}`} onClick={() => setSelectedCell({x, y})}>
@@ -57,6 +67,13 @@ const TableEdit = ({ controller, i, data }) => {
           })}
         </div>
       </div>
+      <ToolBarContainer controller={controller} i={i} data={data}>
+        <ul>
+          <li>
+            <a href='#'>{'Add row'}</a>
+          </li>
+        </ul>
+      </ToolBarContainer>
     </div>
   )
 }
@@ -65,7 +82,15 @@ const TableBlockComponent = ({ controller, focusing, i, data }) => {
   if (focusing !== i) {
     return (
       <table>
-        <>
+        {data[i].map((row, x) => (
+          <tr key={`table-view-${i}-row-${x}`}>
+            {row.map((cell, y) => (
+              <td key={`table-view-${i}-cell-${x}-${y}`}>
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
       </table>
     )
   }
