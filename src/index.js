@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useMemo } from 'react'
-import { h1, h2, p, list } from './blocks/index'
+import { h1, h2, p, img, list, table } from './blocks/index'
 
 import './styles/ceditor.css'
 
 const initConfigs = {
-  blocks: [ h1, h2, p, list ]
+  blocks: [ h1, h2, p, list, table ]
 }
 
 const ceditor = (configs=initConfigs) => {
