@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?esu58n');
-  src:  url('fonts/icomoon.eot?esu58n#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?esu58n') format('truetype'),
-    url('fonts/icomoon.woff?esu58n') format('woff'),
-    url('fonts/icomoon.svg?esu58n#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?ty2xvx');
+  src:  url('fonts/icomoon.eot?ty2xvx#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ty2xvx') format('truetype'),
+    url('fonts/icomoon.woff?ty2xvx') format('woff'),
+    url('fonts/icomoon.svg?ty2xvx#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,11 +25,68 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-arrow_drop_down:before {
+.icon-table:before {
+  content: "\e911";
+}
+.icon-alert-circle:before {
+  content: "\e90a";
+}
+.icon-arrow-left:before {
+  content: "\e90b";
+}
+.icon-arrow-right:before {
+  content: "\e90c";
+}
+.icon-camera1:before {
+  content: "\e903";
+}
+.icon-check:before {
+  content: "\e914";
+}
+.icon-chevron-down:before {
+  content: "\e906";
+}
+.icon-chevron-left:before {
+  content: "\e90d";
+}
+.icon-chevron-right:before {
+  content: "\e90e";
+}
+.icon-chevron-up:before {
+  content: "\e910";
+}
+.icon-edit-2:before {
   content: "\e900";
 }
-.icon-help-circle:before {
+.icon-help-circle1:before {
+  content: "\e913";
+}
+.icon-layout:before {
+  content: "\e917";
+}
+.icon-list:before {
+  content: "\e912";
+}
+.icon-minus:before {
+  content: "\e908";
+}
+.icon-more-horizontal:before {
+  content: "\e915";
+}
+.icon-more-vertical:before {
+  content: "\e916";
+}
+.icon-plus1:before {
+  content: "\e909";
+}
+.icon-x:before {
+  content: "\e904";
+}
+.icon-arrow_drop_down:before {
   content: "\e901";
+}
+.icon-help-circle:before {
+  content: "\e902";
 }
 .icon-pencil:before {
   content: "\e905";
@@ -39,9 +96,6 @@
 }
 .icon-camera:before {
   content: "\e90f";
-}
-.icon-user-tie:before {
-  content: "\e976";
 }
 .icon-list2:before {
   content: "\e9bb";

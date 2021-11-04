@@ -1,25 +1,15 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import Toolbar from './Toolbar'
 
-const Cell = ({ x, y, selected, setSelected, highlighted, change, data }) => {
-  if (state.selected) {
-    const _x = selected.x === 'all' || x === selected.x
-    const _y = selected.y === 'all' || y === selected.y
-    
-    if (_x && _y) {
-      return (
-        <div><input value={data}></div>
-      )
-    }
-  }
+const Cell = ({ x, y, selected, hightlight, change, data }) => {
   return (
-    <div>{data}</div>
+    <div>{selected ? (<input value={data}>) : data}</div>
   )
 }
 
 const TableEdit = ({ controller, i, data }) => {
-  const [selectedCell, setSelectedCell] = useState(null)
-  const [selectedBulk, setSelectedBulk] = useState(null)
+  const [selectedCell, setSelectedCell] = useState({})
+  const [selectedBulk, setSelectedBulk] = useState({})
   
   const change = (x, y, c) => {
     controller.change(data, i, {
@@ -28,15 +18,45 @@ const TableEdit = ({ controller, i, data }) => {
     })
   }
   
+  const rows = data.length, columns = data[0].length
   return (
     <div>
-      {data[i].map((row, x) => {
-        return row.map(cell, y) => {
-          return (
-            <Call x={x} y={y} selected={setSelected} change={}>
-          )
-        }
-      })}
+      <div className='row-selector'>
+        {new Array(rows).fill(0).map((r, x) => (
+          <div key={`table-${i}-handle-x-${x}`}>
+            <a href='#'>{'h'}</a>
+          </div>
+        ))}
+      <div>
+      <div>
+        <div className='columns-selector'>
+          {new Array(columns).fill(0).map((c, y) => (
+            <div key={`table-${i}-handle-y-${y}`>
+              <a href='#'>{'...'}</a>
+            </div>
+          ))}
+        <div>
+        <div className='body'>
+          {data[i].map((row, x) => {
+            return (
+              <div key={`table-${i}-row-${x}`}>
+                {row.map((cell, y) => {
+                  const selected = x === selectedCell.x && y === selectedCell.y
+                  const properties = {
+                    x, y, selected, 
+                    hightlight: x === selectedBulk.x || y === selectedBulk.y, 
+                  }
+                  return (
+                    <div key={`table-${i}-cell-${x}-${y}`} onClick={() => setSelectedCell({x, y})}>
+                      <Call ...properties />
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }

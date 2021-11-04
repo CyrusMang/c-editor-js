@@ -14,5 +14,5 @@ export default {
     }
     return { type: 'EDIT', data }
   },
-  icon: (<span className="icon-list2 icon"></span>)
+  icon: (<span className="icon-list icon"></span>)
 }

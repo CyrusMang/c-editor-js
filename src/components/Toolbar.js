@@ -6,9 +6,9 @@ export const ToolBarContainer = ({ controller, i, data, children }) => {
   
   return (
     <div className='toolbar'>
-      <a href='#' onClick={insert}><span className="icon-plus icon"></span></a>
+      <a href='#' onClick={insert}><span className="icon-plus1 icon"></span></a>
       {children}
-      <a href='#' className='remove' onClick={remove}><span className="icon-cross icon"></span></a>
+      <a href='#' className='remove' onClick={remove}><span className="icon-x icon"></span></a>
     </div>
   )
 }
