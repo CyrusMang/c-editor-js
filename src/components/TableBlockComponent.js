@@ -3,7 +3,7 @@ import { ToolBarContainer } from './Toolbar'
 
 const Cell = ({ x, y, selected, hightlight, change, data }) => {
   return (
-    <div>{selected ? (<input value={data}>) : data}</div>
+    <div>{selected ? (<input value={data}/>) : data}</div>
   )
 }
 
@@ -14,16 +14,14 @@ const TableEdit = ({ controller, i, data }) => {
   const change = (x, y, c) => {
     controller.change(data, i, {
       type: data[i].type,
-      data: data[i].data.map(
-        (row, _x) => {
-          return row.map((cell, _y) => {
-            if (x === _x && y === _y) {
-              return c
-            }
-            return cell
+      data: data[i].data.map((row, _x) => {
+        return row.map((cell, _y) => {
+          if (x === _x && y === _y) {
+            return c
           }
-        }
-      )
+          return cell
+        })
+      })
     })
   }
   
@@ -36,15 +34,15 @@ const TableEdit = ({ controller, i, data }) => {
             <a href='#'>{'h'}</a>
           </div>
         ))}
-      <div>
+      </div>
       <div>
         <div className='columns-selector'>
           {new Array(columns).fill(0).map((c, y) => (
-            <div key={`table-${i}-handle-y-${y}`>
+            <div key={`table-${i}-handle-y-${y}`}>
               <a href='#'>{'...'}</a>
             </div>
           ))}
-        <div>
+        </div>
         <div className='body'>
           {data[i].map((row, x) => {
             return (
@@ -52,13 +50,13 @@ const TableEdit = ({ controller, i, data }) => {
                 {row.map((cell, y) => {
                   const selected = x === selectedCell.x && y === selectedCell.y
                   const properties = {
-                    x, y, selected, change
+                    x, y, selected, change, 
                     hightlight: x === selectedBulk.x || y === selectedBulk.y, 
                     data: cell,
                   }
                   return (
                     <div key={`table-${i}-cell-${x}-${y}`} onClick={() => setSelectedCell({x, y})}>
-                      <Call ...properties />
+                      <Call {...properties} />
                     </div>
                   )
                 })}
@@ -95,7 +93,7 @@ const TableBlockComponent = ({ controller, focusing, i, data }) => {
     )
   }
   return (
-    <TableEdit ...{controller, i, data} />
+    <TableEdit controller={controller} i={i} data={data} />
   )
 }
 
