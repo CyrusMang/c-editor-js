@@ -75,4 +75,6 @@ const ceditor = (configs=initConfigs) => {
   }
 }
 
-export default ceditor
+const main = { h1, h2, p, img, list, ceditor }
+
+export default main

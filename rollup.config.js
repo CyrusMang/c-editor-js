@@ -26,10 +26,13 @@ const config = MODE.map(m => {
       name: "c-editor",
       file: `dist/index.${m.fomart}.js`,
       format: m.fomart,
-      exports: "auto",
+      exports: "named",
       globals: {
         "react": "React",
-        "@babel/runtime/helpers/slicedToArray": "_slicedToArray"
+        "@babel/runtime/helpers/slicedToArray": "_slicedToArray",
+        "@babel/runtime/helpers/defineProperty": "_defineProperty",
+        "@babel/runtime/helpers/asyncToGenerator": "_asyncToGenerator",
+        "@babel/runtime/regenerator": "_regeneratorRuntime",
       }
     },
     // this externelizes react to prevent rollup from compiling it
