@@ -75,6 +75,6 @@ const ceditor = (configs=initConfigs) => {
   }
 }
 
-export const blocks = { h1, h2, p, img, list, table }
+export { h1, h2, p, img, list, table }
 
 export default ceditor
