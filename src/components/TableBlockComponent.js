@@ -77,6 +77,7 @@ const TableEdit = ({ controller, i, data }) => {
 }
 
 const TableBlockComponent = ({ controller, focusing, i, data }) => {
+  data = data || [['', '', ''], ['', '', '']]
   if (focusing !== i) {
     return (
       <table>
