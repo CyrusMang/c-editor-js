@@ -1,15 +1,21 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { ToolBarContainer } from './Toolbar'
 
+const initData = [['', '', ''], ['', '', '']]
+
 const Cell = ({ x, y, selected, hightlight, change, data }) => {
   return (
-    <div>{selected ? (<input value={data}/>) : data}</div>
+    <div>
+      {selected ? (<textarea value={data} onChange={e => change(x, y, e.target.value)}/>) : data}
+    </div>
   )
 }
 
 const TableEdit = ({ controller, i, data }) => {
   const [selectedCell, setSelectedCell] = useState({})
   const [selectedBulk, setSelectedBulk] = useState({})
+  const [state, setState] = useState({})
+  const textareaRef = useRef(null)
   
   const change = (x, y, c) => {
     controller.change(data, i, {
@@ -25,13 +31,27 @@ const TableEdit = ({ controller, i, data }) => {
     })
   }
   
-  const rows = data.length, columns = data[0].length
+  useEffect(() => {
+    if (!textareaRef.current) return
+    textareaRef.current.style.height = 'inherit'
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+    textareaRef.current.focus()
+    const len = textareaRef.current.value.length
+    textareaRef.current.setSelectionRange(len, len)
+  }, [data[i], textareaRef.current])
+
+  const tabledata = data[i].data || initData
+  const rows = tabledata.length, columns = tabledata[0].length
   return (
     <div>
       <div className='row-selector'>
         {new Array(rows).fill(0).map((r, x) => (
           <div key={`table-${i}-handle-x-${x}`}>
-            <a href='#'>{'h'}</a>
+            {selectedCell.x === x ? (
+              <a href='#' onClick={() => setSelectedBulk({x})}>
+                <span className="icon-more-vertical icon"></span>
+              </a>
+            ) : ''}
           </div>
         ))}
       </div>
@@ -39,12 +59,16 @@ const TableEdit = ({ controller, i, data }) => {
         <div className='columns-selector'>
           {new Array(columns).fill(0).map((c, y) => (
             <div key={`table-${i}-handle-y-${y}`}>
-              <a href='#'>{'...'}</a>
+              {selectedCell.y === y ? (
+                <a href='#' onClick={() => setSelectedBulk({y})}>
+                  <span className="icon-more-horizontal icon"></span>
+                </a>
+              ) : ''}
             </div>
           ))}
         </div>
         <div className='body'>
-          {data[i].map((row, x) => {
+          {tabledata.map((row, x) => {
             return (
               <div key={`table-${i}-row-${x}`}>
                 {row.map((cell, y) => {
@@ -56,7 +80,7 @@ const TableEdit = ({ controller, i, data }) => {
                   }
                   return (
                     <div key={`table-${i}-cell-${x}-${y}`} onClick={() => setSelectedCell({x, y})}>
-                      <Call {...properties} />
+                      <Cell {...properties} />
                     </div>
                   )
                 })}
@@ -66,22 +90,24 @@ const TableEdit = ({ controller, i, data }) => {
         </div>
       </div>
       <ToolBarContainer controller={controller} i={i} data={data}>
-        <ul>
-          <li>
-            <a href='#'>{'Add row'}</a>
-          </li>
-        </ul>
+        <div>
+          <ul>
+            <li>
+              <a href='#'>{'Add row'}</a>
+            </li>
+          </ul>
+        </div>
       </ToolBarContainer>
     </div>
   )
 }
 
 const TableBlockComponent = ({ controller, focusing, i, data }) => {
-  data = data || [['', '', ''], ['', '', '']]
   if (focusing !== i) {
+    const tabledata = data[i].data || initData
     return (
       <table>
-        {data[i].map((row, x) => (
+        {tabledata.map((row, x) => (
           <tr key={`table-view-${i}-row-${x}`}>
             {row.map((cell, y) => (
               <td key={`table-view-${i}-cell-${x}-${y}`}>
