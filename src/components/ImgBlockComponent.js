@@ -5,9 +5,7 @@ import { ToolBarContainer } from './Toolbar'
 const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
   const input = useRef(null)
   const uploader = useUploader(upload)
-  
-  const pick = useCallback(input.current.click, [])
-  const changeFile = useCallback(e => uploader.change(e.target.files[0]), [])
+  const changeFile = e => uploader.change(e.target.files[0])
   
   useEffect(() => {
     if (uploader.status === 'completed') {
@@ -20,7 +18,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
   
   useEffect(() => {
     if (input.current) {
-      pick()
+      input.current.click()
     }
   }, [input.current])
   
@@ -43,7 +41,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
       <ToolBarContainer controller={controller} i={i} data={data}>
         <ul>
           <li>
-            <a href='#' onClick={pick}>{'SELECT IMAGE'}</a>
+            <a href='#' onClick={() => input.current.click()}>{'SELECT IMAGE'}</a>
           </li>
         </ul>
       </ToolBarContainer>
