@@ -32,7 +32,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
   }
   return (
     <div>
-      {uploader.errors.map(e => (<p key={e}>{e}</p>))}
+      {uploader.errors ? uploader.errors.map(e => (<p key={e}>{e}</p>)) : ''}
       <div>
         {uploader.status === 'pending' ? (<div>{'File uploading ...'}</div>) : ''}
         <img src={uploader.preview || preview}/>
