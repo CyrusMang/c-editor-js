@@ -19,7 +19,7 @@ const useUploader = upload => {
       try {
         readPreview(file)
         const [errors, result] = await upload(file)
-        if (error) {
+        if (errors) {
           setState(state => ({...state, status: 'error', errors }))
           return
         }
