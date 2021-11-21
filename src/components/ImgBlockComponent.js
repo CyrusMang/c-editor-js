@@ -11,7 +11,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
     if (uploader.status === 'completed') {
       controller.change(data, i, {
         type: data[i].type,
-        data: uploader.result,
+        data: { src: uploader.result },
       })
     }
   }, [uploader.status])
@@ -22,7 +22,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
     }
   }, [])
   
-  const preview = data[i].data ? data[i].data.url : ''
+  const preview = data[i].data ? data[i].data.src : ''
   if (focusing !== i) {
     return (
       <div>
