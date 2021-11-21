@@ -20,7 +20,7 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
     if (input.current) {
       input.current.click()
     }
-  }, [input.current])
+  }, [])
   
   const preview = data[i].data ? data[i].data.url : ''
   if (focusing !== i) {
@@ -39,11 +39,13 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
       </div>
       <input type='file' ref={input} onChange={changeFile} style={{display: 'none'}}/>
       <ToolBarContainer controller={controller} i={i} data={data}>
-        <ul>
-          <li>
-            <a href='#' onClick={() => input.current.click()}>{'SELECT IMAGE'}</a>
-          </li>
-        </ul>
+        <div>
+          <ul>
+            <li>
+              <a href='#' onClick={() => input.current.click()}>{'SELECT IMAGE'}</a>
+            </li>
+          </ul>
+        </div>
       </ToolBarContainer>
     </div>
   )
