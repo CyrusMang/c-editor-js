@@ -117,6 +117,8 @@
 }
 
 .ceditor {
+  background: #333;
+  color: #999;
   margin:0;
   font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
 }
@@ -184,11 +186,26 @@
 }
 .ceditor .list .container textarea {
   vertical-align: text-top;
-  margin-left: -5px;
+  margin: 0;
   width: calc(100% - 8px);
 }
 .ceditor .view {
   padding: 6px 16px;
+}
+.ceditor .img .container {
+  margin: 10px 0;
+}
+.ceditor .img .container img {
+  width: 100%;
+}
+.ceditor .img .empty-image {
+  background: #444;
+  padding: 100px 0;
+  text-align: center;
+}
+.ceditor .img .empty-image small {
+  font-size: 15px;
+  color: #777;
 }
 .ceditor textarea {
   margin: 0 10px;

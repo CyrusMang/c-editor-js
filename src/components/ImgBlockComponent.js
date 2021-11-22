@@ -16,26 +16,33 @@ const ImgBlockComponent = upload => ({ controller, focusing, i, data }) => {
     }
   }, [uploader.status])
   
-  useEffect(() => {
-    if (input.current) {
-      input.current.click()
-    }
-  }, [])
-  
-  const preview = data[i].data ? data[i].data.src : ''
+  let preview = data[i].data ? data[i].data.src : null
   if (focusing !== i) {
     return (
-      <div>
-        <img src={preview}/>
+      <div className='container'>
+        {preview ? (
+          <img src={preview}/>
+        ) : (
+          <div className='empty-image'><small>{'No Image'}</small></div>
+        )}
       </div>
     )
+  }
+  if (!preview) {
+    preview = uploader.preview
   }
   return (
     <div>
       {uploader.errors ? uploader.errors.map(e => (<p key={e}>{e}</p>)) : ''}
-      <div>
-        {uploader.status === 'pending' ? (<div>{'File uploading ...'}</div>) : ''}
-        <img src={uploader.preview || preview}/>
+      <div className='container'>
+        <a href='#' onClick={() => input.current.click()}>
+          {uploader.status === 'pending' ? (<div>{'File uploading ...'}</div>) : ''}
+          {preview ? (
+            <img src={preview}/>
+          ) : (
+            <div className='empty-image'><small>{'Upload Image'}</small></div>
+          )}
+        </a>
       </div>
       <input type='file' ref={input} onChange={changeFile} style={{display: 'none'}}/>
       <ToolBarContainer controller={controller} i={i} data={data}>

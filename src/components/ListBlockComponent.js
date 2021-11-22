@@ -54,7 +54,7 @@ const ListBlockComponent = ({ controller, focusing, i, data }) => {
     if (!onFocus || !textareaRef.current) return
     textareaRef.current.style.height = 'inherit'
     textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
-    textareaRef.current.focus()
+    // textareaRef.current.focus()
     const len = textareaRef.current.value.length
     textareaRef.current.setSelectionRange(len, len)
   }, [onFocus, pointFocusing, data[i], textareaRef.current])
