@@ -1,5 +1,7 @@
+# Warning!
+The library still under development. 
 # Intro
-A block-styled editor for reactJs, friendly for mobile
+A block-styled editor for reactJs, friendly for mobile.
 # Getting started
 ```
 import cEditor, { h1, h2, p, list } from 'c-react-editor'
@@ -71,5 +73,6 @@ const Editor = cEditor({
     list
   ]
 })
+
 ....
 ```
