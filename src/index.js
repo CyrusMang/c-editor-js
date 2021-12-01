@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { h1, h2, p, img, list, table } from './blocks/index'
+import Toolbar, { ToolBarContainer } from './components/Toolbar'
 
 import './styles/ceditor.css'
 
@@ -75,6 +76,6 @@ const ceditor = (configs=initConfigs) => {
   }
 }
 
-export { h1, h2, p, img, list, table }
+export { h1, h2, p, img, list, table, Toolbar, ToolBarContainer }
 
 export default ceditor
