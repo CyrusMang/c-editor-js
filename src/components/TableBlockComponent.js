@@ -1,6 +1,47 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { ToolBarContainer } from './Toolbar'
 
+const initData2 = {
+  state: {
+    row: 3,
+    column: 2,
+    width: [100]
+  },
+  cells: {
+    'c-1-1': 'test'
+  }
+}
+
+const TableEdit2 = ({ controller, i, data }) => {
+  const tableRef = useRef(null)
+  const textareaRef = useRef(null)
+  const [selected, setSelected] = useState(null)
+  const [bulkSelected, setBulkSelected] = useState(null)
+  
+  return (
+    <div>
+      {(() => {
+        if (bulkSelected) {
+          return ''
+        }
+        if (selected) {
+          return (
+            <div>
+              <a href='#'>{'C'}</a>
+              <a href='#'>{'R'}</a>
+            </div>
+          )
+        }
+      })()}
+      <table ref={textareaRef}>
+        
+      </table>
+    </div>
+  )
+}
+
+
+
 const initData = [['', '', ''], ['', '', '']]
 
 const Cell = ({ x, y, selected, hightlight, change, data }) => {
