@@ -5,37 +5,70 @@ const initData2 = {
   state: {
     row: 3,
     column: 2,
-    width: [100]
   },
   cells: {
-    'c-1-1': 'test'
-  }
+    'c-1-1': 'test',
+  },
 }
 
 const TableEdit2 = ({ controller, i, data }) => {
   const tableRef = useRef(null)
-  const textareaRef = useRef(null)
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState([1, 1])
   const [bulkSelected, setBulkSelected] = useState(null)
+  
+  useEffect(() => {
+    if (!tableRef.current) return
+    const c = tableRef.current.selector(`c-${selected[0]}-${selected[1]}`)
+    
+  }, [tableRef.current, selected])
   
   return (
     <div>
-      {(() => {
-        if (bulkSelected) {
-          return ''
-        }
-        if (selected) {
-          return (
-            <div>
-              <a href='#'>{'C'}</a>
-              <a href='#'>{'R'}</a>
+      </div>
+        {selected ? (
+          <div className={bulkSelected === 'R' ? 'selected' : ''}>
+            <a href='#' onClick={() => setBulkSelected('R')}>
+              {'R'}
+            </a>
+          </div>
+        ) : ''}
+        <div>
+          {selected ? (
+            <div className={bulkSelected === 'C' ? 'selected' : ''}>
+              <a href='#' onClick={() => setBulkSelected('C')}>
+                {'C'}
+              </a>
             </div>
-          )
-        }
-      })()}
-      <table ref={textareaRef}>
-        
-      </table>
+          ) : ''}
+          <table>
+            
+          </table>
+        </div>
+      </div>
+      <ToolBarContainer controller={controller} i={i} data={data}>
+        <div>
+          {(() => {
+            if (!bulkSelected) {
+              return ''
+            }
+            if (bulkSelected === 'R') {
+              return (
+                <ul>
+                  <li><a href='#'>{'Add row'}</a></li>
+                  <li><a href='#'>{'Delete row'}</a></li>
+                </ul>
+              )
+            } else if (bulkSelected === 'C') {
+              return (
+                <ul>
+                  <li><a href='#'>{'Add column'}</a></li>
+                  <li><a href='#'>{'Delete column'}</a></li>
+                </ul>
+              )
+            }
+          })()}
+        </div>
+      </ToolBarContainer>
     </div>
   )
 }
