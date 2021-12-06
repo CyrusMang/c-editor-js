@@ -13,20 +13,28 @@ const initData2 = {
 
 const TableEdit2 = ({ controller, i, data }) => {
   const tableRef = useRef(null)
-  const [selected, setSelected] = useState([1, 1])
+  const [selected, setSelected] = useState(null)
   const [bulkSelected, setBulkSelected] = useState(null)
+  
+  const select = e => {
+    const c = e.currentTarget
+    const offset = {top: c.offsetTop, left: c.offsetLeft, height: c.offsetHeight, width: c.offsetWidth}
+    const position = JSON.parse(c.getAttribute('data-id'))
+    setSelected({offset, position})
+  }
   
   useEffect(() => {
     if (!tableRef.current) return
-    const c = tableRef.current.selector(`c-${selected[0]}-${selected[1]}`)
-    
-  }, [tableRef.current, selected])
+    const c = tableRef.current.selector(`td:first-child`)
+    c.click()
+  }, [tableRef.current])
   
+  const payload = data[i].data || initData2
   return (
     <div>
       </div>
         {selected ? (
-          <div className={bulkSelected === 'R' ? 'selected' : ''}>
+          <div className={bulkSelected === 'R' ? 'selected' : ''} style={{ top: selected.offset.top, height: selected.offset.height }}>
             <a href='#' onClick={() => setBulkSelected('R')}>
               {'R'}
             </a>
@@ -34,14 +42,28 @@ const TableEdit2 = ({ controller, i, data }) => {
         ) : ''}
         <div>
           {selected ? (
-            <div className={bulkSelected === 'C' ? 'selected' : ''}>
+            <div className={bulkSelected === 'C' ? 'selected' : ''} style={{ left: selected.offset.left, width: selected.offset.width }}>
               <a href='#' onClick={() => setBulkSelected('C')}>
                 {'C'}
               </a>
             </div>
           ) : ''}
-          <table>
-            
+          <table ref={tableRef}>
+            {[...Array(payload.state.row)].map((_, _i) => {
+              const _r = _i + 1
+              return (
+                <tr>
+                  {[...Array(payload.state.column)].map((_, __i) => {
+                    const id = `c-${_r}-${__i + 1}`
+                    return (
+                      <td onClick={select} data-id={id}>
+                        {payload.cells[id] || ''}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
           </table>
         </div>
       </div>
