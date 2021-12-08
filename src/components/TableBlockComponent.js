@@ -10,9 +10,10 @@ const initData = {
 }
 
 const TableEdit = ({ controller, i, data }) => {
-  const tableRef = useRef(null)
   const [selected, setSelected] = useState(null)
   const [bulkSelected, setBulkSelected] = useState(null)
+  const tableRef = useRef(null)
+  const payload = data[i].data || initData
   
   const select = e => {
     const c = e.currentTarget
@@ -27,7 +28,6 @@ const TableEdit = ({ controller, i, data }) => {
     c.click()
   }, [tableRef.current])
   
-  const payload = data[i].data || initData
   return (
     <div>
       </div>
