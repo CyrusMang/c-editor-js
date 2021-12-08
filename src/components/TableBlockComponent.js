@@ -61,7 +61,7 @@ const TableEdit = ({ controller, i, data }) => {
                         hightlight = true
                       }
                     }
-                    const id = `c-${_r}-${c}`
+                    const id = `c-${_r}-${_c}`
                     return (
                       <td onClick={select} data-id={id} className={hightlight}>
                         {payload.cells[id] || ''}
