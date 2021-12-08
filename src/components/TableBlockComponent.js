@@ -24,13 +24,13 @@ const TableEdit = ({ controller, i, data }) => {
   
   useEffect(() => {
     if (!tableRef.current) return
-    const c = tableRef.current.selector(`td:first-child`)
+    const c = tableRef.current.querySelector(`td:first-child`)
     c.click()
   }, [tableRef.current])
   
   return (
     <div>
-      </div>
+      <div>
         {selected ? (
           <div className={bulkSelected === 'R' ? 'selected' : ''} style={{ top: selected.offset.top, height: selected.offset.height }}>
             <a href='#' onClick={() => setBulkSelected('R')}>
@@ -47,30 +47,32 @@ const TableEdit = ({ controller, i, data }) => {
             </div>
           ) : ''}
           <table ref={tableRef}>
-            {[...Array(payload.state.row)].map((_, _i) => {
-              const _r = _i + 1
-              return (
-                <tr>
-                  {[...Array(payload.state.column)].map((_, __i) => {
-                    const _c = __i + 1
-                    let hightlight = false
-                    if (selected) {
-                      const r = selected[0] === _r
-                      const c = selected[1] === _c
-                      if ((r && c) || (bulkSelected === 'R' && r) || (bulkSelected === 'C' && c)) {
-                        hightlight = true
+            <tbody>
+              {[...Array(payload.state.row)].map((_, _i) => {
+                const _r = _i + 1
+                return (
+                  <tr>
+                    {[...Array(payload.state.column)].map((_, __i) => {
+                      const _c = __i + 1
+                      let hightlight = false
+                      if (selected) {
+                        const r = selected[0] === _r
+                        const c = selected[1] === _c
+                        if ((r && c) || (bulkSelected === 'R' && r) || (bulkSelected === 'C' && c)) {
+                          hightlight = true
+                        }
                       }
-                    }
-                    const id = `c-${_r}-${_c}`
-                    return (
-                      <td onClick={select} data-id={id} className={hightlight}>
-                        {payload.cells[id] || ''}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
+                      const id = `c-${_r}-${_c}`
+                      return (
+                        <td onClick={select} data-id={JSON.stringify([_r, _c])} className={hightlight ? 'hightlight' : ''} key={`table-${i}-${id}`}>
+                          {payload.cells[id] || ''}
+                        </td>
+                      )
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
           </table>
         </div>
       </div>

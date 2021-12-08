@@ -32,6 +32,7 @@ const config = MODE.map(m => {
         "@babel/runtime/helpers/slicedToArray": "_slicedToArray",
         "@babel/runtime/helpers/defineProperty": "_defineProperty",
         "@babel/runtime/helpers/asyncToGenerator": "_asyncToGenerator",
+        "@babel/runtime/helpers/toConsumableArray": "_toConsumableArray",
         "@babel/runtime/regenerator": "_regeneratorRuntime",
       }
     },
