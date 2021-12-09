@@ -32,15 +32,15 @@ const TableEdit = ({ controller, i, data }) => {
     <div>
       <div>
         {selected ? (
-          <div className={bulkSelected === 'R' ? 'selected' : ''} style={{ top: selected.offset.top, height: selected.offset.height }}>
+          <div className={bulkSelected === 'R' ? 'row-selector selected' : 'row-selector'} style={{ top: selected.offset.top, height: selected.offset.height }}>
             <a href='#' onClick={() => setBulkSelected('R')}>
               {'R'}
             </a>
           </div>
         ) : ''}
-        <div>
+        <div className='table-body'>
           {selected ? (
-            <div className={bulkSelected === 'C' ? 'selected' : ''} style={{ left: selected.offset.left, width: selected.offset.width }}>
+            <div className={bulkSelected === 'C' ? 'column-selector selected' : 'column-selector'} style={{ left: selected.offset.left, width: selected.offset.width }}>
               <a href='#' onClick={() => setBulkSelected('C')}>
                 {'C'}
               </a>
@@ -56,8 +56,13 @@ const TableEdit = ({ controller, i, data }) => {
                       const _c = __i + 1
                       let hightlight = false
                       if (selected) {
-                        const r = selected[0] === _r
-                        const c = selected[1] === _c
+                        console.log('selected', selected)
+                        console.log(_r)
+                        console.log(_c)
+                        const r = selected.position[0] === _r
+                        const c = selected.position[1] === _c
+                        console.log(r)
+                        console.log(c)
                         if ((r && c) || (bulkSelected === 'R' && r) || (bulkSelected === 'C' && c)) {
                           hightlight = true
                         }
