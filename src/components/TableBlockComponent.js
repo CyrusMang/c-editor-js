@@ -65,7 +65,7 @@ const TableEdit = ({ controller, i, data }) => {
                       const id = `c-${_r}-${_c}`
                       return (
                         <td onClick={select} data-id={JSON.stringify([_r, _c])} className={hightlight ? 'hightlight' : ''} key={`table-${i}-${id}`}>
-                          {payload.cells[id] || ''}
+                          <textarea value={payload.cells[id] || ''}/>
                         </td>
                       )
                     })}

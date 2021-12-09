@@ -169,6 +169,9 @@
   background: #999;
 }
 
+.ceditor .view {
+  padding: 6px 16px;
+}
 .ceditor .h1 .view, .ceditor .h1 textarea {
   font-size: 20px;
 }
@@ -190,9 +193,6 @@
   margin: 0;
   width: calc(100% - 8px);
 }
-.ceditor .view {
-  padding: 6px 16px;
-}
 .ceditor .img .container {
   margin: 10px 0;
 }
@@ -207,6 +207,10 @@
 .ceditor .img .empty-image small {
   font-size: 15px;
   color: #777;
+}
+.ceditor .table table td {
+  min-width: 100px;
+  min-height: 20px;
 }
 .ceditor textarea {
   margin: 0 10px;
