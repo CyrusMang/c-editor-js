@@ -30,11 +30,11 @@ const TableEdit = ({ controller, i, data }) => {
   
   return (
     <div>
-      <div>
+      <div className='table-container'>
         {selected ? (
           <div className={bulkSelected === 'R' ? 'row-selector selected' : 'row-selector'} style={{ top: selected.offset.top, height: selected.offset.height }}>
             <a href='#' onClick={() => setBulkSelected('R')}>
-              {'R'}
+              <span className="icon-more-vertical icon"></span>
             </a>
           </div>
         ) : ''}
@@ -42,7 +42,7 @@ const TableEdit = ({ controller, i, data }) => {
           {selected ? (
             <div className={bulkSelected === 'C' ? 'column-selector selected' : 'column-selector'} style={{ left: selected.offset.left, width: selected.offset.width }}>
               <a href='#' onClick={() => setBulkSelected('C')}>
-                {'C'}
+                <span className="icon-more-horizontal icon"></span>
               </a>
             </div>
           ) : ''}
@@ -51,18 +51,13 @@ const TableEdit = ({ controller, i, data }) => {
               {[...Array(payload.state.row)].map((_, _i) => {
                 const _r = _i + 1
                 return (
-                  <tr>
+                  <tr key={`table-${i}-row-${_r}`}>
                     {[...Array(payload.state.column)].map((_, __i) => {
                       const _c = __i + 1
                       let hightlight = false
                       if (selected) {
-                        console.log('selected', selected)
-                        console.log(_r)
-                        console.log(_c)
                         const r = selected.position[0] === _r
                         const c = selected.position[1] === _c
-                        console.log(r)
-                        console.log(c)
                         if ((r && c) || (bulkSelected === 'R' && r) || (bulkSelected === 'C' && c)) {
                           hightlight = true
                         }
@@ -70,7 +65,7 @@ const TableEdit = ({ controller, i, data }) => {
                       const id = `c-${_r}-${_c}`
                       return (
                         <td onClick={select} data-id={JSON.stringify([_r, _c])} className={hightlight ? 'hightlight' : ''} key={`table-${i}-${id}`}>
-                          <textarea value={payload.cells[id] || ''}/>
+                          <textarea value={payload.cells[id] || ''} rows={1}/>
                         </td>
                       )
                     })}
@@ -90,15 +85,15 @@ const TableEdit = ({ controller, i, data }) => {
             if (bulkSelected === 'R') {
               return (
                 <ul>
-                  <li><a href='#'>{'Add row'}</a></li>
-                  <li><a href='#'>{'Delete row'}</a></li>
+                  <li><a href='#'>{'ADD ROW'}</a></li>
+                  <li><a href='#'>{'DELETE ROW'}</a></li>
                 </ul>
               )
             } else if (bulkSelected === 'C') {
               return (
                 <ul>
-                  <li><a href='#'>{'Add column'}</a></li>
-                  <li><a href='#'>{'Delete column'}</a></li>
+                  <li><a href='#'>{'ADD COLUMN'}</a></li>
+                  <li><a href='#'>{'DELETE COLUMN'}</a></li>
                 </ul>
               )
             }

@@ -208,9 +208,47 @@
   font-size: 15px;
   color: #777;
 }
+.ceditor .table .table-container {
+  margin-left: 5px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.ceditor .table .table-body {
+  margin-left: 20px;
+  padding-top: 20px;
+  position: relative;
+}
+.ceditor .table .column-selector, .ceditor .table .row-selector {
+  position: absolute;
+}
+.ceditor .table .column-selector a, .ceditor .table .row-selector a {
+  color: #fff;
+}
+.ceditor .table .column-selector {
+  text-align: center;
+  top: 0;
+}
+.ceditor .table .row-selector {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+.ceditor .table table {
+  border-collapse: collapse;
+}
 .ceditor .table table td {
   min-width: 100px;
   min-height: 20px;
+  border: 1px solid #fff;
+}
+.ceditor .table table td textarea {
+  margin: 0;
+  border-radius: 0;
+  background: none;
+  width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  min-width: calc(100% - 20px);
+  display: block;
 }
 .ceditor textarea {
   margin: 0 10px;
