@@ -224,14 +224,21 @@
 .ceditor .table .column-selector a, .ceditor .table .row-selector a {
   color: #fff;
 }
+.ceditor .table .column-selector.selected, .ceditor .table .row-selector.selected {
+  background: #444;
+}
 .ceditor .table .column-selector {
   text-align: center;
   top: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 .ceditor .table .row-selector {
   margin-top: 20px;
   display: flex;
   align-items: center;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 .ceditor .table table {
   border-collapse: collapse;
@@ -240,6 +247,9 @@
   min-width: 100px;
   min-height: 20px;
   border: 1px solid #fff;
+}
+.ceditor .table table td.hightlight {
+  background: #444;
 }
 .ceditor .table table td textarea {
   margin: 0;

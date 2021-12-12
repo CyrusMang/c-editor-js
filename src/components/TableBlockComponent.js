@@ -20,6 +20,14 @@ const TableEdit = ({ controller, i, data }) => {
     const offset = {top: c.offsetTop, left: c.offsetLeft, height: c.offsetHeight, width: c.offsetWidth}
     const position = JSON.parse(c.getAttribute('data-id'))
     setSelected({offset, position})
+    setBulkSelected(null)
+  }
+  
+  const change = (key, value) => {
+    controller.change(data, i, {
+      type: data[i].type,
+      data: { ...payload, cells: {...payload.cells, [key]: value} },
+    })
   }
   
   useEffect(() => {
@@ -65,7 +73,7 @@ const TableEdit = ({ controller, i, data }) => {
                       const id = `c-${_r}-${_c}`
                       return (
                         <td onClick={select} data-id={JSON.stringify([_r, _c])} className={hightlight ? 'hightlight' : ''} key={`table-${i}-${id}`}>
-                          <textarea value={payload.cells[id] || ''} rows={1}/>
+                          <textarea value={payload.cells[id] || ''} rows={1} onChange={e => change(id, e.target.value)}/>
                         </td>
                       )
                     })}
