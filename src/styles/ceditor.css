@@ -132,6 +132,7 @@
 .ceditor .icon {
   font-size: 15px;
   line-height: 15px;
+  vertical-align: text-bottom;
 }
 .ceditor .toolbar {
   background: #666;
@@ -146,8 +147,8 @@
   display: inline-block;
   min-width: 19px;
   text-align: center;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
 }
 .ceditor .toolbar > a.remove {
   float: right;
@@ -207,6 +208,9 @@
 .ceditor .img .empty-image small {
   font-size: 15px;
   color: #777;
+}
+.ceditor .table .view table td {
+  padding: 10px;
 }
 .ceditor .table .table-container {
   margin-left: 5px;

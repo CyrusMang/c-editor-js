@@ -217,19 +217,30 @@ const TableEdit = ({ controller, i, data }) => {
 
 const TableBlockComponent = ({ controller, focusing, i, data }) => {
   if (focusing !== i) {
-    const tabledata = data[i].data || initData
+    const payload = data[i].data || initData
     return (
-      <table>
-        {tabledata.map((row, x) => (
-          <tr key={`table-view-${i}-row-${x}`}>
-            {row.map((cell, y) => (
-              <td key={`table-view-${i}-cell-${x}-${y}`}>
-                {cell}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </table>
+      <div className='view'>
+        <table>
+          <tbody>
+            {[...Array(payload.state.row)].map((_, _i) => {
+              const _r = _i + 1
+              return (
+                <tr key={`table-${i}-row-${_r}-view`}>
+                  {[...Array(payload.state.column)].map((_, __i) => {
+                    const _c = __i + 1
+                    const id = `c-${_r}-${_c}`
+                    return (
+                      <td key={`table-${i}-${id}-view`}>
+                        {payload.cells[id] || ''}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
     )
   }
   return (
