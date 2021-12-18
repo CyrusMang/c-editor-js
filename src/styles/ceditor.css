@@ -251,6 +251,7 @@
   min-width: 100px;
   min-height: 20px;
   border: 1px solid #fff;
+  font-size: 12px;
 }
 .ceditor .table table td.hightlight {
   background: #444;
