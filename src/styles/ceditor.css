@@ -189,6 +189,9 @@
   padding: 5px 0;
   margin: 0;
 }
+.ceditor .list .view p {
+  font-size: 12px;
+}
 .ceditor .list .container textarea {
   vertical-align: text-top;
   margin: 0;

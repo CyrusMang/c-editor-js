@@ -6,7 +6,7 @@ const initData = {
     row: 3,
     column: 2,
   },
-  cells: {},
+  cells: [],
 }
 
 const TableEdit = ({ controller, i, data }) => {
@@ -23,10 +23,49 @@ const TableEdit = ({ controller, i, data }) => {
     setBulkSelected(null)
   }
   
-  const change = (key, value) => {
+  const change = (row, column, value) => {
+    let cells = payload.cells.filter(v => v.row !== row || v.column !== column)
+    cells.push({row, column, value})
+    
     controller.change(data, i, {
       type: data[i].type,
-      data: { ...payload, cells: {...payload.cells, [key]: value} },
+      data: { ...payload, cells },
+    })
+  }
+  
+  const addrow = () => {
+    controller.change(data, i, {
+      type: data[i].type,
+      data: { 
+        state: { 
+          row: payload.state.row+1,
+          column: payload.state.column,
+        }, 
+        cells: payload.cells.map(c => {
+          if (c.row >= selected.position[0]) {
+            c.row = c.row+1
+          }
+          return c
+        }),
+      },
+    })
+  }
+  
+  const addcolumn = () => {
+    controller.change(data, i, {
+      type: data[i].type,
+      data: { 
+        state: { 
+          row: payload.state.row,
+          column: payload.state.column+1,
+        }, 
+        cells: payload.cells.map(c => {
+          if (c.column >= selected.position[1]) {
+            c.column = c.column+1
+          }
+          return c
+        }),
+      },
     })
   }
   
@@ -70,10 +109,10 @@ const TableEdit = ({ controller, i, data }) => {
                           hightlight = true
                         }
                       }
-                      const id = `c-${_r}-${_c}`
+                      const cell = payload.cells.find(v => v.row === _r && v.column === _c)
                       return (
-                        <td onClick={select} data-id={JSON.stringify([_r, _c])} className={hightlight ? 'hightlight' : ''} key={`table-${i}-${id}`}>
-                          <textarea value={payload.cells[id] || ''} rows={1} onChange={e => change(id, e.target.value)}/>
+                        <td onClick={select} data-id={JSON.stringify([_r, _c])} className={hightlight ? 'hightlight' : ''} key={`table-${i}-c-${_r}-${_c}`}>
+                          <textarea value={cell ? cell.value : ''} rows={1} onChange={e => change(_r, _c, e.target.value)}/>
                         </td>
                       )
                     })}
@@ -93,14 +132,14 @@ const TableEdit = ({ controller, i, data }) => {
             if (bulkSelected === 'R') {
               return (
                 <ul>
-                  <li><a href='#'>{'ADD ROW'}</a></li>
+                  <li><a href='#' onClick={addrow}>{'ADD ROW'}</a></li>
                   <li><a href='#'>{'DELETE ROW'}</a></li>
                 </ul>
               )
             } else if (bulkSelected === 'C') {
               return (
                 <ul>
-                  <li><a href='#'>{'ADD COLUMN'}</a></li>
+                  <li><a href='#' onClick={addcolumn}>{'ADD COLUMN'}</a></li>
                   <li><a href='#'>{'DELETE COLUMN'}</a></li>
                 </ul>
               )
@@ -125,10 +164,10 @@ const TableBlockComponent = ({ controller, focusing, i, data }) => {
                 <tr key={`table-${i}-row-${_r}-view`}>
                   {[...Array(payload.state.column)].map((_, __i) => {
                     const _c = __i + 1
-                    const id = `c-${_r}-${_c}`
+                    const cell = payload.cells.find(v => v.row === _r && v.column === _c)
                     return (
-                      <td key={`table-${i}-${id}-view`}>
-                        {payload.cells[id] || ''}
+                      <td key={`table-${i}-c-${_r}-${_c}-view`}>
+                        {cell ? cell.value : ''}
                       </td>
                     )
                   })}
