@@ -212,18 +212,26 @@
   font-size: 15px;
   color: #777;
 }
+.ceditor .table .view {
+  overflow-x: auto;
+  padding: 16px;
+}
 .ceditor .table .view table td {
   padding: 10px;
 }
 .ceditor .table .table-container {
   margin-left: 5px;
-  margin-bottom: 20px;
   position: relative;
 }
 .ceditor .table .table-body {
   margin-left: 20px;
   padding-top: 20px;
+  padding-bottom: 20px;
   position: relative;
+  overflow-x: auto;
+}
+.ceditor .table .table-body table{
+  margin-right: 15px;
 }
 .ceditor .table .column-selector, .ceditor .table .row-selector {
   position: absolute;
